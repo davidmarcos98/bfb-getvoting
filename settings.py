@@ -19,7 +19,7 @@ def quit_script(missing_keys):
 
 missing_variables = []
 
-DATAWRAPPER_FOLDER_NAME = environ.get("DATAWRAPPER_TOKEN", None)
+DATAWRAPPER_FOLDER_NAME = environ.get("DATAWRAPPER_FOLDER_NAME", None)
 DATAWRAPPER_TOKEN = environ.get("DATAWRAPPER_TOKEN", None)
 if not DATAWRAPPER_TOKEN:
     missing_variables.append("DATAWRAPPER_TOKEN")

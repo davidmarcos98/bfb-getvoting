@@ -8,7 +8,6 @@ from pandas import DataFrame
 from progressbar import *
 from settings import DATAWRAPPER_FOLDER_NAME, DATAWRAPPER_TOKEN
 
-
 dw = Datawrapper(access_token=DATAWRAPPER_TOKEN)
 EXISTING_CHARTS = dw.get_charts(limit=9999)
 
@@ -20,9 +19,9 @@ def get_folder_id(folder_name: str) -> str:
     return ""
 
 
-def chart_exists(title: str) -> Optional[dict]:
+def chart_exists(title: str, folder_id: str) -> Optional[dict]:
     for chart in EXISTING_CHARTS:
-        if chart["title"] == title:
+        if chart["title"] == title and chart["folderId"] == folder_id:
             return chart
 
 
@@ -36,20 +35,16 @@ def delete_all_charts_in_folder(folder: str):
 def generate_chart(
     data: dict, title: str, folder_id: Optional[str] = ""
 ) -> Optional[dict]:
-    chart = chart_exists(title)
+    chart = chart_exists(title, folder_id)
     if not chart:
-        print(Fore.GREEN + f"Creating chart for {title}...")
         chart = dw.create_chart(
             title=title, chart_type="d3-bars", data=data, folder_id=folder_id
         )
         dw.update_metadata(chart["id"], {"visualize": {"sort-bars": True}})
         dw.publish_chart(chart["publicId"], display=False)
     else:
+        # TODO update data instead
         time.sleep(0.02)
-        print(
-            Fore.YELLOW
-            + f"Chart for {chart['title']} already exists with ID {chart['id']}"
-        )
     return chart["publicId"]
 
 
@@ -70,7 +65,7 @@ def add_charts(items):
     constituencies_ids = [item["Constituency code"].title() for item in items]
     update = False
 
-    if all(chart_exists(title) for title in titles):
+    if all(chart_exists(title, FOLDER_ID) for title in titles):
         user_input = input(
             Fore.YELLOW
             + "\nAll charts exist in Datawrapper already. Do you want to update their data? (Y/n)"
@@ -86,7 +81,7 @@ def add_charts(items):
             return charts
 
     widgets = [
-        FormatLabel(""),
+        FormatLabel(Fore.GREEN + ""),
         " ",
         Percentage(),
         " ",
@@ -107,7 +102,9 @@ def add_charts(items):
         title = item["Constituency name"].title()
         constituency_id = item["Constituency code"].title()
 
-        widgets[0] = FormatLabel(f"Creating chart for {title}...")
+        widgets[0] = FormatLabel(
+            Fore.GREEN + f"Creating chart for {title}... ({i+1}/{len(items)})"
+        )
         progressbar.update(i)
 
         chart_id = generate_chart(df, title, FOLDER_ID)
