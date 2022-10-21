@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - A Pen by David</title>
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700'><link rel="stylesheet" href="./style.css">
+<style>
+body {
+  background-color: #eff4f7;
+  color: #777;
+  font-family: 'Titillium Web', Arial, Helvetica, sans-serif
+}
+
+h1, h2, h3, h4, h5, h6, strong {
+  font-weight: 600;
+}
+
+#topnav {
+  background: #37474f;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 14px;
+}
+
+.admin-menu {
+  color: #eff4f7;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  flex: 0.05 0 0;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1 0 0;
+}
+
+.logo-t {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #26c6da;
+  text-align: center;
+  line-height: 28px;
+  border-radius: 50%;
+  margin-right: 15px;
+  margin-left: 5px;
+  padding-left: 3px;
+}
+
+.search-bar {
+  flex: 2 0 0;
+  align-items: center;
+  justify-content: space-between;
+  background: #232e34;
+  overflow: hidden;
+  display: flex;
+  height: 36px;
+  border-radius: 35px;
+  color: rgba(255,255,255,0.5);
+}
+
+.search-bar-dropdown {
+  flex: 1 0 0;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 18px;
+  margin-right: 15px;
+  background: #2c393f;
+
+}
+.search-bar-input {
+  flex: 2 0 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 18px;
+  line-height: 40px;
+  align-items: center;
+}
+
+.search-bar-input input[type="text"] {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: rgba(255,255,255,0.5);
+}
+.search-bar-input input:focus{
+  outline: none;
+}
+
+.box.banana_map {
+  color: #fff;
+  background: #eff4f7;
+  padding: 0;
+  box-shadow: none;
+}
+.box.banana_map .title {
+  padding-top: 40px;
+  padding-left: 25px;
+  font-size: 16px;
+}
+.box.banana_map .subtitle {
+  font-weight: 700;
+  padding-top: 10px;
+  padding-left: 25px;
+  font-size: 22px;
+}
+
+.box {
+  background-color: #eff4f7 !important;
+  box-shadow: none !important;
+}
+
+.col {
+	padding-left: 0 !important;
+}
+
+.box .banana {
+  min-height: 404px;
+  background-image: url('img/banana.png');
+  background-size: cover;
+}
+.box .map {
+  min-height: 404px;
+  background-image: url('img/map.png');
+  background-size: cover;
+}
+.box .cog-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 55px;
+  top: 25px;
+  z-index: 10;
+}
+
+@media screen and (max-width:760px) {
+  #topnav { flex-wrap: wrap; }
+  .admin-menu { flex-basis: 20%; }
+  .logo { justify-content: flex-end; padding-right: 10px; }
+  .logo { flex-basis: 80%; }
+  .topnav-rightmenu, .search-bar { display: none; }
+}
+
+.box {
+  box-shadow: 0px 1px 22px -12px #607D8B;
+  background-color: #fff;
+  padding: 25px 35px 25px 30px;
+}
+
+#monthly-earnings-chart #apexcharts-canvas {
+  position: relative;
+}
+#monthly-earnings-chart #apexcharts-canvas:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 58%;
+  top: 0;
+  bottom: 0;
+  background: #24bdd3;
+  opacity: 0.65;
+}
+#monthly-earnings-chart #apexcharts-title-text {
+  font-weight: 600;
+}
+#monthly-earnings-chart #apexcharts-subtitle-text {
+  font-weight: 700;
+}
+.monthly-earnings-text {
+  position: absolute;
+  left: 70px;
+  top: 187px;
+  color: #fff;
+  z-index: 10;
+}
+
+.monthly-earnings-text h6 {
+  font-size: 16px;
+}
+.chart-title h5 {
+  font-size: 18px;
+  color: rgba(51,51,51,1);
+  margin-bottom: 38px;
+}
+
+
+@media screen and (max-width:760px) {
+  .monthly-earnings-text {
+    left: 30px;
+  }
+  .box {
+    padding: 25px 0;
+  }
+}
+
+.sparkboxes .box {
+  padding: 3px 0 0 0;
+  position: relative;
+}
+
+#spark1, #spark2, #spark3, #spark4 {
+  position: relative;
+  padding-top: 15px;
+}
+
+
+/* overrides */
+.sparkboxes #apexcharts-subtitle-text { fill: #8799a2 !important; }
+
+
+.spinner-border {
+  display: none;
+}
+</style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="wrapper">
+  <div class="content-area">
+      <div class="container-fluid">
+        <div class="main">
+          <div class="row sparkboxes mt-4 mb-4">
+            <div class="col">
+              <div class="box box2">
+                <div id="spark1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- partial -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js'></script><script  src="./script.js"></script>
+<script>
+
+function timeConvert(n) {
+  return moment.utc(n*60*1000).format('HH:mm:ss');
+}
+
+var randomizeArray = function (arg) {
+  var array = arg.slice();
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  while (0 !== currentIndex) {
+
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+// data for the sparklines that appear below header area
+var data = {
+  "Liberal Democrats": 27.2, 
+  "Plaid Cymru": 26.1, 
+  "Conservative": 18, 
+  "Reform UK": 10.9, 
+  "Labour": 10.8, 
+  "Green": 5.8, 
+  "Other": 0.9
+}
+var colors = {
+  "Liberal Democrats": "#FAA61E", 
+  "Plaid Cymru": "#005B54", 
+  "Conservative": "#0187DC", 
+  "Reform UK": "#13B6CF", 
+  "Labour": "#E4253B", 
+  "Green": "#6AB023", 
+  "Other": "#EAEAEA"
+}
+
+let options = {
+  chart: {
+    type: 'bar',
+    align: 'center',
+    fontFamily: 'Lato !important',
+    height: 300,
+    width: "50%",
+    toolbar: {
+      show: false
+    },
+  },
+  grid: {
+    show: false
+  },
+  plotOptions: {
+    bar: {
+      horizontal: true,
+      dataLabels: {
+          position: 'bottom',
+      }
+    },
+  },
+  dataLabels: {
+    enabled: true,
+    offsetX: 15,
+    dropShadow: {
+      enabled: true,
+      left: 2,
+      top: 2,
+      opacity: 0.5
+    }
+  },
+  xaxis: {
+    title: {
+      text: "Percentage of voters",
+      style: {
+        fontSize: '14px',
+        fontWeight: 400,
+      },
+    }
+  },
+  yaxis:{
+    labels: {
+      style: {
+        fontSize: '14px',
+        fontWeight: 600,
+      },
+    },
+  },
+  series: [{
+    data: Object.keys(data).map((name) => ({"x": name, "y": data[name], fillColor: colors[name]}))
+  }]
+}
+
+
+new ApexCharts(document.querySelector("#spark1"), options).render();
+</script>
+</body>
+</html>
