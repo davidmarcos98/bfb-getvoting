@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+
+  <meta charset="UTF-8">
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+</head>
+<body>
+<div id="wrapper">
+          <div class="row sparkboxes mt-4 mb-4">
+            <div class="col">
+              <div class="box box2">
+                <div id="spark13"></div>
+              </div>
+            </div>
+          </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js'></script><script  src="./script.js"></script>
+<script>
+let sheetData2 = JSON.parse("{{wf {&quot;path&quot;:&quot;polldata&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}".replaceAll("&quot;", '"'))
+
+// data for the sparklines that appear below header area
+var unsortedData2 = {
+  "Liberal Democrats": sheetData["Lib Dem"], 
+  "Conservative": sheetData["Tory"], 
+  "Reform UK": sheetData["brexit party"], 
+  "Labour": sheetData["Lab"], 
+  "Green": sheetData["Green"], 
+  "Other": sheetData["other"]
+}
+let orderedKeys2= Object.keys(unsortedData).sort(function(a,b){return unsortedData[b].replace("%", "")-unsortedData2[a].replace("%", "")})
+let data2 = {}
+for (let item of orderedKeys){
+	data2[item] = unsortedData2[item]
+}
+var colors2 = {
+  "Liberal Democrats": "#FAA61E", 
+  "Plaid Cymru": "#005B54", 
+  "Conservative": "#0187DC", 
+  "Reform UK": "#13B6CF", 
+  "Labour": "#E4253B", 
+  "Green": "#6AB023", 
+  "Other": "#EAEAEA"
+}
+
+let options2 = {
+  chart: {
+    type: 'bar',
+    align: 'center',
+    fontFamily: 'Lato !important',
+    height: 300,
+    toolbar: {
+      show: false
+    },
+  },
+  grid: {
+    show: false
+  },
+  plotOptions: {
+    bar: {
+      horizontal: true,
+      dataLabels: {
+          position: 'bottom',
+      }
+    },
+  },
+  dataLabels: {
+    enabled: true,
+    offsetX: 10,
+    dropShadow: {
+      enabled: false,
+      left: 2,
+      top: 2,
+      opacity: 0.5
+    }
+  },
+  xaxis: {
+    title: {
+      text: "Percentage of voters",
+      style: {
+        fontSize: '16px',
+        fontWeight: 600,
+      },
+    }
+  },
+  yaxis:{
+    labels: {
+      style: {
+        fontSize: '14px',
+        fontWeight: 400,
+      },
+    },
+  },
+  series: [{
+    data: Object.keys(data2).map((name) => ({"x": name, "y": data2[name], fillColor: colors2[name]}))
+  }]
+}
+
+
+new ApexCharts(document.querySelector("#spark13"), options2).render();
+</script>
+</body>
+</html>

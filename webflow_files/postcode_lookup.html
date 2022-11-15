@@ -1,0 +1,148 @@
+<head>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<style>
+	#postcode {
+		background-color: #ffffff;
+		border-radius: 10px;
+		border: 1px solid #cccccc;
+		color: #333333;
+		display: block;
+		font-size: 14px;
+		height: 38px;
+		line-height: 1.42857143;
+		margin-bottom: 10px;
+		padding: 8px 12px;
+		text-align: center;
+		text-transform: uppercase;
+    	width: 100%;
+	}
+	::-webkit-input-placeholder { /* WebKit browsers */
+		text-transform: none;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		text-transform: none;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+		text-transform: none;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+		text-transform: none;
+	}
+	::placeholder { /* Recent browsers */
+		text-transform: none;
+	}
+	#submit {
+		background-color: #3898EC;
+		border-radius: 10px;
+		border: 0;
+		color: white;
+		cursor: pointer;
+		display: inline-block;
+		line-height: inherit;
+		padding: 9px 15px;
+		text-decoration: none;
+    	width: 75%;
+	}
+	.spinner {
+		-webkit-animation: spin 2	s linear infinite; /* Safari */
+		animation: spin 2s linear infinite;
+		border-radius: 50%;
+		border-top: 5px solid #3498db;
+		border: 5px solid #f3f3f3;
+		display: none;
+		height: 10px;
+		width: 10px;
+	}
+	/* Safari */
+	@-webkit-keyframes spin {
+		0% { -webkit-transform: rotate(0deg); }
+		100% { -webkit-transform: rotate(360deg); }
+	}
+
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+</style>
+
+<body>
+
+	<div class="spinner" id="spinner"></div>
+	<div class="container">
+		<form id="form">
+			<input name="postcode" id="postcode" placeholder="Postcode Search" autofocus><input type="submit" id="submit" value="Submit">
+			<noscript>
+				<p>You seem to have Javascript turned off, so this postcode lookup will not work.</p>
+				<p>We recommend looking up your constituency in the <a href="/all">constituency A-Z</a> instead.</p>
+			</noscript>
+		</form>
+		<div id="error"></div>
+
+	</div>
+
+<script>
+
+	document.getElementById("form").addEventListener("submit", function(e) {
+		showLoadSpinner();
+		e.preventDefault();
+		setTimeout(() => {searchPostcode()}, 200);
+	});
+	
+	function showLoadSpinner(){
+		document.getElementById("spinner").style.display = "block";
+	}
+	function hideLoadSpinner(){
+		document.getElementById("spinner").style.display = "none";
+	}
+
+    function parsePostcode( postcode ) {
+		postcode = postcode.replace(/ /g, '').toUpperCase();
+		let matches = postcode.match(/^([A-Z]{1,2}[0-9][0-9A-Z]?)([0-9][A-Z]{2})?$/);
+		return !matches ? false : {
+			postcode: matches[0],
+			outcode: matches[1],
+			incode: matches[2]
+		};
+
+	}
+
+	function showError(text) {
+		var error = document.getElementById('error');
+		error.innerHTML = text;
+		hideLoadSpinner();
+
+	}
+
+	function searchPostcode() {
+		postcode = document.getElementById("postcode").value;
+		postcode = postcode.replace(/ /g, '').toUpperCase();
+		let matches = postcode.match(/^([A-Z]{1,2}[0-9][0-9A-Z]?)([0-9][A-Z]{2})?$/);
+
+		if (!matches) {
+			showError("Hmm... That does not look like a postcode! Please check your input.");
+			return false;
+		}
+		let outcode = matches[1]
+		let incode = matches[2]
+
+		axios.get('https://storage.googleapis.com/bfb_bucket_constituencies_codes/' + outcode + '.json') 
+		.then(function (response) {
+			let url = response.data[incode];
+			if (!url) {
+				showError("The second part of your postcode doesn't seem to exist, please review your input");
+			} else {
+				console.log(url);
+				document.getElementById('error').style.innerHTML = '';
+				hideLoadSpinner();
+				window.location.href = 'constituencies/' + url;
+			}
+		})
+		.catch(function (error) {
+			showError("We can't find the first part of the postcode, please check it again");
+		});
+
+
+	}
+</script>
+</body>

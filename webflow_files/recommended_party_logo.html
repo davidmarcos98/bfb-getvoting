@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+<style>
+h1, h2, h3, h4, h5, h6, strong {
+  font-weight: 600;
+}
+
+#data-detail {
+  font-size: 12px;
+  font-weight: 300;
+  width: fit-content;
+  margin: auto;
+  margin-top: -10px;
+ }
+
+.box {
+  box-shadow: none !important;
+}
+
+.col {
+	padding-left: 0 !important;
+}
+
+.sparkboxes .box {
+  padding: 3px 0 0 0;
+  position: relative;
+}
+
+#spark1, #spark2, #spark3, #spark4 {
+  position: relative;
+  padding-top: 15px;
+}
+#spark1, #spark2 {
+  padding-bottom: 20px;
+}
+
+
+</style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="wrapper">
+   <img id="image" style="padding: 0 300px;" src=""/>
+</div>
+<script>
+let imageData = JSON.parse("{{wf {&quot;path&quot;:&quot;polldata&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}".replaceAll("&quot;", '"'))
+let recommended = imageData['Launch recommendation']
+let imageSrc = '';
+
+switch(recommended) {
+	case "Lab":
+		imageSrc = "https://uploads-ssl.webflow.com/61d59d526b23e336e0b58774/62b33148d403cb77c4648266_Labour%20Logo.png";
+    break;
+	case "Lib Dem":
+		imageSrc = "https://uploads-ssl.webflow.com/61d59d526b23e336e0b58774/62ff629c5552a6efcf9657c3_Liberal_Democrats_logo.png";
+}
+console.log("HEY")
+document.getElementById("image").src = imageSrc;
+</script>
+</body>
+</html>

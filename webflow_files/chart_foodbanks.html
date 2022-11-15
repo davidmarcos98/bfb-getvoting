@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css'>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js'></script>
+</head>
+<body>
+  <div id="foodparcels"></div>
+  <p id="data-detail">Number of food parcels distributed by food 
+banks, national level. - Chart made by Best for Britain</p>
+  <script>
+    Apex.grid = {
+      padding: {
+        right: 0,
+        left: 0
+      }
+    }
+
+    Apex.dataLabels = {
+      enabled: false
+    }
+
+    // data for the sparklines that appear below header area
+    var sparklineData = [40898, 2173158]; //TODO real data
+
+    var spark2 = {
+      chart: {
+        id: 'sparkline1',
+        group: 'foodbanks',
+        type: 'line',
+        height: 300,
+        sparkline: {
+          enabled: true
+        },
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      fill: {
+        opacity: 1,
+      },
+      series: [{
+        name: 'Parcels',
+        data: sparklineData
+      }],
+      tooltip: {
+        enabled: true,
+        y: {
+          formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+            return value.toLocaleString('en-UK')
+          },
+          title: {
+            formatter: (seriesName) => '',
+          },
+        }
+      },
+      grid: {
+        padding: {
+          left: 100,
+          right: 100,
+          bottom: 25
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        textAnchor: 'middle',
+        formatter: function(val, opt) {
+            return ['2009', '2021'][opt.dataPointIndex]
+        },
+      },
+      labels: ['2009', '2021'],
+      yaxis: {
+        min: 20000
+      },
+      xaxis: {
+        type: 'time',
+      },
+      colors: ['#faa537'],
+      title: {
+        text: '+5200%',
+        offsetX: 100,
+        style: {
+          fontSize: '24px',
+          cssClass: 'apexcharts-yaxis-title'
+        }
+      },
+      subtitle: {
+        text: 'Supplied Food Parcels',
+        offsetX: 100,
+        style: {
+          fontSize: '14px',
+          cssClass: 'apexcharts-yaxis-title'
+        }
+      },
+      annotations: {
+            yaxis: [
+              {
+                y: 258138,
+                borderColor: "#e62a19",
+                label: {
+                  borderColor: "#e62a19",
+                  style: {
+                    color: "#fff",
+                    background: "#e62a19"
+                  },
+                  text: "Region: 258,138",
+                  padding: {
+                    left: 5,
+                    right: 25,
+                    top: 0,
+                    bottom: 2,
+                  }
+                }
+              },
+            ]
+      },
+    }
+
+    new ApexCharts(document.querySelector("#foodparcels"), spark2).render();
+  </script>
+</body>
+</html>

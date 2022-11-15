@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/5.2/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+</head>
+<body>
+
+  <div class="row sparkboxes mt-4 mb-4">
+    <div class="col d-flex align-items-start justify-content-center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="4em" height="3em" fill="currentColor" class="bi text-muted flex-shrink-0 me-3 bi-house-door" viewBox="0 0 16 16">
+      <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"></path>
+    </svg>
+      <div>
+        <h5 class="fw-bold mb-0" id="homelessness"></h5>
+      <p id="data-detail">Region-level homelessness, 2021 - Made by Best for Britain</p>
+      </div>
+    </div>
+    <div class="col d-flex align-items-start justify-content-center">
+      <div>
+        <h5 id="crimes_solved">5.1% of Crimes Solved</h5>
+      <p id="data-detail">Percentage of robberies, burglaries, and other theft 
+    solved 7/2019-6/2022, national level. - Made by Best for Britain</p>
+      </div>
+    </div>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js'></script>
+<script>
+let homelessness = parseInt("{{wf {&quot;path&quot;:&quot;homelessness&quot;,&quot;type&quot;:&quot;Number&quot;\} }}")
+document.getElementById("homelessness").innerText = homelessness.toLocaleString('en-UK') + " homeless people in this region"
+</script>
+</body>
+
+</html>

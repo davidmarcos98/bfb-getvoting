@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="wrapper">
+  <div class="content-area">
+      <div class="container-fluid">
+        <div class="main">
+          <div class="row sparkboxes mt-4 mb-4">
+            <div class="col">
+              <div class="box box2">
+                <div id="spark2"></div>
+              </div>
+  <p id="data-detail">Mean ambulance response time, Ambulance Trust level. - Chart made by Best for Britain</p>
+            </div>
+            <div class="col">
+              <div class="box box2">
+                <div id="spark1"></div>
+              </div>
+  <p id="data-detail">Number of police employed, Police Force Area level.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- partial -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js'></script>
+<script>
+
+function timeConvert(n) {
+  return moment.utc(n*60*1000).format('HH:mm:ss');
+}
+
+var randomizeArray = function (arg) {
+  var array = arg.slice();
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  while (0 !== currentIndex) {
+
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+// data for the sparklines that appear below header area
+var sparklineData = [1890, 2086];
+
+var spark1 = {
+  chart: {
+    type: 'area',
+    sparkline: {
+    	enabled: true
+    },
+    height: 200
+  },
+  colors: ['#be3bff'],
+  fill: {
+    opacity: 1,
+  },
+  series: [{
+    name: 'Police Officers',
+    data: sparklineData
+  }],
+  tooltip: {
+    enabled: true,
+    y: {
+      formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+        return "Number of Police Officers: " + value.toLocaleString('en-UK')
+      },
+      title: {
+        formatter: (seriesName) => '',
+      },
+    }
+  },
+  labels: ['2010', '2021'],
+  grid: {
+    padding: {
+      left: 25,
+      right: 25
+    }
+  },
+  dataLabels: {
+    enabled: true,
+    textAnchor: 'middle',
+    formatter: function(val, opt) {
+        return ['2010', '2021'][opt.dataPointIndex]
+    },
+  },
+  yaxis: {
+    min: 1800
+  },
+  xaxis: {
+    type: 'time',
+  },
+  title: {
+    text: '+196',
+    offsetX: 5,
+    style: {
+      fontSize: '24px',
+      cssClass: 'apexcharts-yaxis-title'
+    }
+  },
+  subtitle: {
+    text: 'Police Officers',
+    offsetX: 5,
+    style: {
+      fontSize: '14px',
+      cssClass: 'apexcharts-yaxis-title'
+    }
+  }
+}
+
+new ApexCharts(document.querySelector("#spark1"), spark1).render();
+
+
+// data for the sparklines that appear below header area
+var sparklineData = [46, 63];
+
+var spark2 = {
+  chart: {
+    type: 'area',
+    height: 200,
+    sparkline: {
+      enabled: true
+    },
+  },
+  fill: {
+    opacity: 1,
+  },
+  series: [{
+    name: 'Minutes',
+    data: sparklineData
+  }],
+  tooltip: {
+    enabled: true,
+    y: {
+      formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+        return "Waiting time: " + timeConvert(value)
+      },
+      title: {
+        formatter: (seriesName) => '',
+      },
+    }
+  },
+  grid: {
+    padding: {
+      left: 25,
+      right: 25
+    }
+  },
+  dataLabels: {
+    enabled: true,
+    textAnchor: 'middle',
+    formatter: function(val, opt) {
+        return ['2017', '2022'][opt.dataPointIndex]
+    },
+  },
+  labels: ['2017', '2022'],
+  yaxis: {
+    min: 40
+  },
+  xaxis: {
+    type: 'time',
+  },
+  colors: ['#008FFB'],
+  title: {
+    text: '+00:18:00 (+31%)',
+    offsetX: 5,
+    style: {
+      fontSize: '24px',
+      cssClass: 'apexcharts-yaxis-title'
+    }
+  },
+  subtitle: {
+    text: 'Ambulance Waiting Time',
+    offsetX: 5,
+    style: {
+      fontSize: '14px',
+      cssClass: 'apexcharts-yaxis-title'
+    }
+  }
+}
+
+new ApexCharts(document.querySelector("#spark2"), spark2).render();
+</script>
+</body>
+</html>
